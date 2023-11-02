@@ -48,21 +48,20 @@
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    UIInterfaceOrientationMask defaultOrientations = UIInterfaceOrientationMaskPortrait;
-
     if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        defaultOrientations = UIInterfaceOrientationMaskAll;
+        return UIInterfaceOrientationMaskAll;
     }
 
     if (!self.presentedViewController) {
-        return defaultOrientations;
+        return UIInterfaceOrientationMaskPortrait;
     }
 
-    if (self.presentedViewController.isBeingDismissed || self.presentedViewController.isBeingPresented) {
-        return defaultOrientations;
+    UIInterfaceOrientationMask supportedInterfaceOrientations = self.presentedViewController.supportedInterfaceOrientations;
+    if (supportedInterfaceOrientations == 0) {
+        return UIInterfaceOrientationMaskPortrait;
     }
 
-    return self.presentedViewController.supportedInterfaceOrientations;
+    return supportedInterfaceOrientations;
 }
 
 @end
