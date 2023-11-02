@@ -52,12 +52,17 @@
         return UIInterfaceOrientationMaskAll;
     }
 
-    if (!self.presentedViewController) {
+    UIViewController *presentedViewController = self.presentedViewController;
+    if (!presentedViewController) {
         return UIInterfaceOrientationMaskPortrait;
     }
 
-    UIInterfaceOrientationMask supportedInterfaceOrientations = self.presentedViewController.supportedInterfaceOrientations;
+    UIInterfaceOrientationMask supportedInterfaceOrientations = presentedViewController.supportedInterfaceOrientations;
     if (supportedInterfaceOrientations == 0) {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+
+    if (presentedViewController.isBeingDismissed) {
         return UIInterfaceOrientationMaskPortrait;
     }
 
