@@ -43,6 +43,16 @@
     [super presentViewController:viewControllerToPresent animated:flag completion:completion];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    if (@available(iOS 16.0, *)) {
+        [self setNeedsUpdateOfSupportedInterfaceOrientations];
+    } else {
+        [UIViewController attemptRotationToDeviceOrientation];
+    }
+}
+
 - (BOOL)shouldAutorotate {
     return YES;
 }
@@ -62,7 +72,7 @@
         return UIInterfaceOrientationMaskPortrait;
     }
 
-    if (presentedViewController.isBeingDismissed) {
+    if (presentedViewController.isBeingDismissed || presentedViewController.isBeingPresented) {
         return UIInterfaceOrientationMaskPortrait;
     }
 
