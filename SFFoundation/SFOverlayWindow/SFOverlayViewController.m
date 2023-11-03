@@ -63,20 +63,30 @@
     }
 
     UIViewController *presentedViewController = self.presentedViewController;
-    if (!presentedViewController) {
-        return UIInterfaceOrientationMaskPortrait;
+    if (presentedViewController) {
+        if (presentedViewController.isBeingDismissed || presentedViewController.isBeingPresented) {
+            return UIInterfaceOrientationMaskPortrait;
+        }
+
+        UIInterfaceOrientationMask supportedInterfaceOrientations = presentedViewController.supportedInterfaceOrientations;
+        if (supportedInterfaceOrientations > 0) {
+            return supportedInterfaceOrientations;
+        }
     }
 
-    UIInterfaceOrientationMask supportedInterfaceOrientations = presentedViewController.supportedInterfaceOrientations;
-    if (supportedInterfaceOrientations == 0) {
-        return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        if (@available(iOS 13.0, *)) {
+            return self.view.window.windowScene.interfaceOrientation;
+        } else {
+            return UIApplication.sharedApplication.statusBarOrientation;
+        }
     }
 
-    if (presentedViewController.isBeingDismissed || presentedViewController.isBeingPresented) {
-        return UIInterfaceOrientationMaskPortrait;
-    }
-
-    return supportedInterfaceOrientations;
+    return UIInterfaceOrientationPortrait;
 }
 
 @end
