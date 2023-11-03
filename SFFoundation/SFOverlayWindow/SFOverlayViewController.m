@@ -46,11 +46,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    if (@available(iOS 16.0, *)) {
-        [self setNeedsUpdateOfSupportedInterfaceOrientations];
-    } else {
-        [UIViewController attemptRotationToDeviceOrientation];
-    }
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        if (@available(iOS 16.0, *)) {
+            [self setNeedsUpdateOfSupportedInterfaceOrientations];
+        } else {
+            [UIViewController attemptRotationToDeviceOrientation];
+        }
+    }];
 }
 
 - (BOOL)shouldAutorotate {
