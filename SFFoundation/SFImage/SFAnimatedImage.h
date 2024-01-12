@@ -6,6 +6,8 @@
 //  Copyright © 2019 lvv. All rights reserved.
 //
 
+#if _USE_SFAnimatedImageDecoder
+
 @interface SFAnimatedImageDecoder : NSObject
 
 @property(nullable, nonatomic, copy) NSData *imageData;
@@ -35,3 +37,5 @@
 @property(nullable, nonatomic, copy) NSData *sf_animatedImageData;
 
 @end
+
+#endif

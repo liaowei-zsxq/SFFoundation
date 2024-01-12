@@ -6,6 +6,8 @@
 //  Copyright © 2019 lvv. All rights reserved.
 //
 
+#if _USE_SFAnimatedImageDecoder
+
 #import "SFAnimatedImage.h"
 #import "SFImageSource.h"
 #import "SFDisplayLink.h"
@@ -207,3 +209,5 @@
 }
 
 @end
+
+#endif // _USE_SFAnimatedImageDecoder
